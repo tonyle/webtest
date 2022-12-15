@@ -198,6 +198,13 @@ foreach ($result as $row) {
 		<meta name="description" content="<?php echo $meta_description_home; ?>">
 		<?php
 	}
+	if($cur_page == 'search.php') {
+		?>
+		<title>Search - <?php echo $meta_title_home; ?></title>
+		<meta name="keywords" content="<?php echo $meta_keyword_home; ?>">
+		<meta name="description" content="<?php echo $meta_description_home; ?>">
+		<?php
+	}
 	?>
 	
 	<?php if($cur_page == 'blog-single.php'): ?>
@@ -270,64 +277,123 @@ foreach ($result as $row) {
 		</div>
 
 		<!-- Main Navigation -->
-
 		<div class="main_nav_container">
 			<div class="container">
 				<div class="row">
-					<div class="col-lg-12 text-right">
-						<div class="logo_container">
-						<a href="index.php"><img src="assets/uploads/<?php echo $logo; ?>" alt="logo image"></a>
-						</div>
-						<nav class="navbar">
-							<ul class="navbar_menu">
-								<li><a href="index.php">Trang chủ</a></li>
-								
-								<?php
-								$statement = $pdo->prepare("SELECT * FROM tbl_top_category WHERE show_on_menu=1");
-								$statement->execute();
-								$result = $statement->fetchAll(PDO::FETCH_ASSOC);
-								foreach ($result as $row) {
-									?>
-									<li><a href="product-category.php?id=<?php echo $row['tcat_id']; ?>&type=top-category"><?php echo $row['tcat_name']; ?></a></li>
+					
+					
+				<div class="col-lg-12 text-right">
+				<div class="logo_container">
+						<a class="logo_container" href="/index.php"><img src="assets/uploads/<?php echo $logo; ?>" alt="logo image"></a>
+					</div>
+						<nav class="navbar navbar-expand-lg navbar-light">
+						
+							<a class="navbar-brand" href="#"></a>
+							<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+								<span class="navbar-toggler-icon"></span>
+							</button>
+											
+							<div class="collapse navbar-collapse" id="navbarSupportedContent">
+								<ul class="navbar-nav mr-auto">
+									<li class="nav-item active">
+										<a class="nav-link customer-font" href="index.php">Trang chủ<span class="sr-only">(current)</span></a>
+									</li>
+									
+
 									<?php
-								}
-								?>
+										$statement = $pdo->prepare("SELECT * FROM tbl_top_category WHERE show_on_menu=1");
+										$statement->execute();
+										$result = $statement->fetchAll(PDO::FETCH_ASSOC);
+										foreach ($result as $row) {
+											?>
+												<li class="nav-item active">
+													<a class="nav-link customer-font" href="product-category.php?id=<?php echo $row['tcat_id']; ?>&type=top-category"><?php echo $row['tcat_name']; ?><span class="sr-only"></span></a>
+												</li>
+											<?php
+										}
+										?>
 
-								<?php
-								$statement = $pdo->prepare("SELECT * FROM tbl_page WHERE id=1");
-								$statement->execute();
-								$result = $statement->fetchAll(PDO::FETCH_ASSOC);		
-								foreach ($result as $row) {
-									$about_title = $row['about_title'];
-									$faq_title = $row['faq_title'];
-									$blog_title = $row['blog_title'];
-									$contact_title = $row['contact_title'];
-									$pgallery_title = $row['pgallery_title'];
-									$vgallery_title = $row['vgallery_title'];
-								}
-								?>
+									<?php
+										$statement = $pdo->prepare("SELECT * FROM tbl_page WHERE id=1");
+										$statement->execute();
+										$result = $statement->fetchAll(PDO::FETCH_ASSOC);		
+										foreach ($result as $row) {
+											$about_title = $row['about_title'];
+											$faq_title = $row['faq_title'];
+											$blog_title = $row['blog_title'];
+											$contact_title = $row['contact_title'];
+											$pgallery_title = $row['pgallery_title'];
+											$vgallery_title = $row['vgallery_title'];
+										}
+									?>
 
-								<li><a href="about.php"><?php echo $about_title; ?></a></li>
-								<li><a href="faq.php"><?php echo $faq_title; ?></a></li>
-
-								<li><a href="contact.php"><?php echo $contact_title; ?></a></li>
-							</ul>
-							<ul class="navbar_user">
-								<li class="checkout">
-									<a href="cart.php">
-										<i class="fa fa-shopping-cart" aria-hidden="true"></i>
-										<span id="checkout_items" class="checkout_items"><?php echo isset($_SESSION['cart_p_id']) ? count($_SESSION['cart_p_id']): 0; ?></span>
-									</a>
+								<li class="nav-item active">
+									<a class="nav-link customer-font" href="faq.php"><?php echo $faq_title; ?><span class="sr-only"></span></a>
 								</li>
-							</ul>
-							<div class="hamburger_container">
-								<i class="fa fa-bars" aria-hidden="true"></i>
+					
+								<li class="nav-item active">
+									<form class=" nav-link form-inline my-2 my-lg-0"  action="search.php">
+										<input class="form-control mr-sm-2" name="keyword" type="search" placeholder="Search" aria-label="Search">
+										<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+									</form>
+								</li>
+								</ul>
+								<ul class="navbar_user order-checkout-desktop" >
+									<li class="checkout">
+										<a href="cart.php">
+											<i class="fa fa-shopping-cart" aria-hidden="true"></i>
+											<span id="checkout_items" class="checkout_items"><?php echo isset($_SESSION['cart_p_id']) ? count($_SESSION['cart_p_id']): 0; ?></span>
+										</a>
+									</li>
+								</ul>	
 							</div>
 						</nav>
-					</div>
+
+					
+
+				</div>
+					
 				</div>
 			</div>
 		</div>
+				
+		
+
+
+		<!-- remove here -->
+		
 
 	</header>
 	<div style="clear: both;"></div>
+	<style>
+		.show, .collapsing {
+			position: absolute;
+			top: 100px;
+			right: 0px;
+			width: 400px;
+			background: white;
+			padding: 10px;
+			box-shadow: 0 0 10px #666;
+		}
+		.customer-font {
+			font-weight: bold;
+			margin-top: 10px;
+			font-size: 18px;
+		}
+		@media only screen and (min-width: 0px) and (max-width: 480px) {
+			.order-checkout-desktop {
+				display: none;
+				display: hidden;
+			}
+		}
+		@media only screen and (min-width: 480px) and (max-width: 999999px) {
+			.order-checkout-desktop {
+				display: block;
+			}
+		}
+		/* @media screen and (min-width:769px) {
+			#order-checkout-desktop {
+			display: block;
+		} */
+		}
+	</style>

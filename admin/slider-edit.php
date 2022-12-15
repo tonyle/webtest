@@ -13,7 +13,7 @@ if(isset($_POST['form1'])) {
         $file_name = basename( $path, '.' . $ext );
         if( $ext!='jpg' && $ext!='png' && $ext!='jpeg' && $ext!='gif' ) {
             $valid = 0;
-            $error_message .= 'You must have to upload jpg, jpeg, gif or png file<br>';
+            $error_message .= 'Định dạng cho phép: jpg, jpeg, gif hoặc png<br>';
         }
     }
 
@@ -33,7 +33,7 @@ if(isset($_POST['form1'])) {
     		$statement->execute(array($final_name,$_POST['heading'],$_POST['content'],$_POST['button_text'],$_POST['button_url'],$_POST['position'],$_REQUEST['id']));
 		}	   
 
-	    $success_message = 'Slider is updated successfully!';
+	    $success_message = 'Cập nhật thành công!';
 	}
 }
 ?>
@@ -57,10 +57,10 @@ if(!isset($_REQUEST['id'])) {
 
 <section class="content-header">
 	<div class="content-header-left">
-		<h1>Edit Slider</h1>
+		<h1>Sửa banner</h1>
 	</div>
 	<div class="content-header-right">
-		<a href="slider.php" class="btn btn-primary btn-sm">View All</a>
+		<a href="slider.php" class="btn btn-primary btn-sm">Xem danh sách banner</a>
 	</div>
 </section>
 
@@ -102,55 +102,55 @@ foreach ($result as $row) {
 				<div class="box box-info">
 					<div class="box-body">
 						<div class="form-group">
-							<label for="" class="col-sm-2 control-label">Existing Photo</label>
+							<label for="" class="col-sm-2 control-label">Hình có sẵn</label>
 							<div class="col-sm-9" style="padding-top:5px">
 								<img src="../assets/uploads/<?php echo $photo; ?>" alt="Slider Photo" style="width:400px;">
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="" class="col-sm-2 control-label">Photo </label>
+							<label for="" class="col-sm-2 control-label">Hình ảnh </label>
 							<div class="col-sm-6" style="padding-top:5px">
-								<input type="file" name="photo">(Only jpg, jpeg, gif and png are allowed)
+								<input type="file" name="photo">Chỉ cho phép jpg, jpeg, gif và png)
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="" class="col-sm-2 control-label">Heading </label>
+							<label for="" class="col-sm-2 control-label">Tiêu đề </label>
 							<div class="col-sm-6">
 								<input type="text" autocomplete="off" class="form-control" name="heading" value="<?php echo $heading; ?>">
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="" class="col-sm-2 control-label">Content </label>
+							<label for="" class="col-sm-2 control-label">Nội dung </label>
 							<div class="col-sm-6">
 								<textarea class="form-control" name="content" style="height:140px;"><?php echo $content; ?></textarea>
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="" class="col-sm-2 control-label">Button Text </label>
+							<label for="" class="col-sm-2 control-label">Chữ trên nút </label>
 							<div class="col-sm-6">
 								<input type="text" autocomplete="off" class="form-control" name="button_text" value="<?php echo $button_text; ?>">
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="" class="col-sm-2 control-label">Button URL </label>
+							<label for="" class="col-sm-2 control-label">URL </label>
 							<div class="col-sm-6">
 								<input type="text" autocomplete="off" class="form-control" name="button_url" value="<?php echo $button_url; ?>">
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="" class="col-sm-2 control-label">Position </label>
+							<label for="" class="col-sm-2 control-label">Vị trí </label>
 							<div class="col-sm-6">
 								<select name="position" class="form-control">
-									<option value="Left" <?php if($position == 'Left') {echo 'selected';} ?>>Left</option>
-									<option value="Center" <?php if($position == 'Center') {echo 'selected';} ?>>Center</option>
-									<option value="Right" <?php if($position == 'Right') {echo 'selected';} ?>>Right</option>
+									<option value="Left" <?php if($position == 'Left') {echo 'selected';} ?>>Trái</option>
+									<option value="Center" <?php if($position == 'Center') {echo 'selected';} ?>>Giữa</option>
+									<option value="Right" <?php if($position == 'Right') {echo 'selected';} ?>>Phải</option>
 								</select>
 							</div>
 						</div>				
 						<div class="form-group">
 							<label for="" class="col-sm-2 control-label"></label>
 							<div class="col-sm-6">
-								<button type="submit" class="btn btn-success pull-left" name="form1">Submit</button>
+								<button type="submit" class="btn btn-success pull-left" name="form1">Cập nhật</button>
 							</div>
 						</div>
 					</div>

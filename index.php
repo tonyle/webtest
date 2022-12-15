@@ -35,7 +35,7 @@ foreach ($result as $row)
     $result = $statement->fetchAll(PDO::FETCH_ASSOC);                            
     foreach ($result as $row) {            
         ?>
-        <div class="main_slider" style="background-image:url(<?php echo $row['photo'] ?>)">
+        <div class="main_slider" style="background-image:url(assets/uploads/<?php echo $row['photo'] ?>)">
             <div class="container fill_height">
                 <div class="row align-items-center fill_height">
                     <div class="col">

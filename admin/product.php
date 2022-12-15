@@ -2,10 +2,10 @@
 
 <section class="content-header">
 	<div class="content-header-left">
-		<h1>View Products</h1>
+		<h1>Sản phẩm</h1>
 	</div>
 	<div class="content-header-right">
-		<a href="product-add.php" class="btn btn-primary btn-sm">Add Product</a>
+		<a href="product-add.php" class="btn btn-primary btn-sm">Thêm sản phẩm</a>
 	</div>
 </section>
 
@@ -17,16 +17,16 @@
 					<table id="example1" class="table table-bordered table-striped">
 						<thead>
 							<tr>
-								<th width="30">SL</th>
-								<th>Photo</th>
-								<th width="200">Product Name</th>
-								<th width="60">Old Price</th>
-								<th width="60">Current Price</th>
-								<th width="60">Quantity</th>
-								<th>Is Featured?</th>
-								<th>Is Active?</th>
-								<th>Category</th>
-								<th width="80">Action</th>
+								<th width="30">STT</th>
+								<th>Hình</th>
+								<th width="200">Tên</th>
+								<th width="60">Giá cũ</th>
+								<th width="60">Giá hiện tại</th>
+								<th width="60">Số lượng</th>
+								<th>Nổi bật?</th>
+								<th>Hoạt động?</th>
+								<th>Danh mục</th>
+								<th width="80">Hành động</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -75,15 +75,15 @@
 									<td><?php echo $row['p_current_price']; ?></td>
 									<td><?php echo $row['p_qty']; ?></td>
 									<td>
-										<?php if($row['p_is_featured'] == 1) {echo 'Yes';} else {echo 'No';} ?>
+										<?php if($row['p_is_featured'] == 1) {echo 'Có';} else {echo 'Không';} ?>
 									</td>
 									<td>
-										<?php if($row['p_is_active'] == 1) {echo 'Yes';} else {echo 'No';} ?>
+										<?php if($row['p_is_active'] == 1) {echo 'Có';} else {echo 'Không';} ?>
 									</td>
-									<td><?php echo $row['tcat_name']; ?><br><?php echo $row['mcat_name']; ?><br><?php echo $row['ecat_name']; ?></td>
+									<td><?php echo $row['tcat_name']; ?></td>
 									<td>										
-										<a href="product-edit.php?id=<?php echo $row['p_id']; ?>" class="btn btn-primary btn-xs">Edit</a>
-										<a href="#" class="btn btn-danger btn-xs" data-href="product-delete.php?id=<?php echo $row['p_id']; ?>" data-toggle="modal" data-target="#confirm-delete">Delete</a>  
+										<a href="product-edit.php?id=<?php echo $row['p_id']; ?>" class="btn btn-primary btn-xs">Sửa</a>
+										<a href="#" class="btn btn-danger btn-xs" data-href="product-delete.php?id=<?php echo $row['p_id']; ?>" data-toggle="modal" data-target="#confirm-delete">Xoá</a>  
 									</td>
 								</tr>
 								<?php
@@ -103,15 +103,15 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel">Delete Confirmation</h4>
+                <h4 class="modal-title" id="myModalLabel">Xác nhận xoá</h4>
             </div>
             <div class="modal-body">
-                <p>Are you sure want to delete this item?</p>
-                <p style="color:red;">Be careful! This product will be deleted from the order table, payment table, size table, color table and rating table also.</p>
+                <p>Bạn chắc chắn muốn xoá?</p>
+                <p style="color:red;">Cẩn thận, sản phẩm sẽ bị xoá và các thông tin liên quan cũng bị xoá theo.</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <a class="btn btn-danger btn-ok">Delete</a>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Huỷ</button>
+                <a class="btn btn-danger btn-ok">Xoá</a>
             </div>
         </div>
     </div>

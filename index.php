@@ -116,8 +116,9 @@ foreach ($result as $row)
                     $statement->execute(array(1,1));
                     $result = $statement->fetchAll(PDO::FETCH_ASSOC);                            
                     foreach ($result as $row) {
+                        $type = ($row['ecat_id'] == 1)? "men": (($row['ecat_id'] == 7)? "women": "accessories");
                         ?>
-                        <div class="product-item men">
+                        <div class="product-item <?php echo $type ?>">
                             <div class="product discount product_filter">
                                 <div class="product_image">
                                     <img src="assets/uploads/<?php echo $row['p_featured_photo']; ?>" alt="">

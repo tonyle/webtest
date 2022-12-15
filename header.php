@@ -90,9 +90,8 @@ foreach ($result as $row) {
 	<link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.carousel.css">
 	<link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
 	<link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/animate.css">
-	<link rel="stylesheet" type="text/css" href="styles/main_styles.css">
 	<link rel="stylesheet" type="text/css" href="styles/responsive.css">
-
+	<link rel="stylesheet" type="text/css" href="styles/main_styles.css">
 	<?php
 
 	$statement = $pdo->prepare("SELECT * FROM tbl_page WHERE id=1");
@@ -219,8 +218,6 @@ foreach ($result as $row) {
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
 
-	<script type="text/javascript" src="//platform-api.sharethis.com/js/sharethis.js#property=5993ef01e2587a001253a261&product=inline-share-buttons"></script>
-
 <?php echo $before_head; ?>
 
 </head>
@@ -255,8 +252,14 @@ foreach ($result as $row) {
 										<i class="fa fa-angle-down"></i>
 									</a>
 									<ul class="account_selection">
-										<!-- <li><a href="#"><i class="fa fa-sign-in" aria-hidden="true"></i>Đăng xuất</a></li> -->
-										<li><a href="#"><i class="fa fa-user-plus" aria-hidden="true"></i>Đăng kí</a></li>
+										<?php 
+										if(!isset($_SESSION['customer'])) { ?>
+											<li><a href="registration.php"><i class="fa fa-user-plus" aria-hidden="true"></i>Đăng kí</a></li>
+											<li><a href="login.php"><i class="fa fa-user-plus" aria-hidden="true"></i>Đăng nhập</a></li>
+										<?php } else { ?>
+											<li><a href="logout.php"><i class="fa fa-user-plus" aria-hidden="true"></i>Đăng xuat</a></li>
+										<?php }
+										?>
 									</ul>
 								</li>
 							</ul>
@@ -277,7 +280,7 @@ foreach ($result as $row) {
 						</div>
 						<nav class="navbar">
 							<ul class="navbar_menu">
-								<li><a href="index.php">Home</a></li>
+								<li><a href="index.php">Trang chủ</a></li>
 								
 								<?php
 								$statement = $pdo->prepare("SELECT * FROM tbl_top_category WHERE show_on_menu=1");
@@ -310,12 +313,10 @@ foreach ($result as $row) {
 								<li><a href="contact.php"><?php echo $contact_title; ?></a></li>
 							</ul>
 							<ul class="navbar_user">
-								<li><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a></li>
-								<li><a href="#"><i class="fa fa-user" aria-hidden="true"></i></a></li>
 								<li class="checkout">
-									<a href="#">
+									<a href="cart.php">
 										<i class="fa fa-shopping-cart" aria-hidden="true"></i>
-										<span id="checkout_items" class="checkout_items">2</span>
+										<span id="checkout_items" class="checkout_items"><?php echo isset($_SESSION['cart_p_id']) ? count($_SESSION['cart_p_id']): 0; ?></span>
 									</a>
 								</li>
 							</ul>
@@ -329,4 +330,4 @@ foreach ($result as $row) {
 		</div>
 
 	</header>
-	<div style="clear: both; height:150px"></div>
+	<div style="clear: both;"></div>

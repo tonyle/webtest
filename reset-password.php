@@ -1,5 +1,5 @@
 <?php require_once('header.php'); ?>
-
+<div class="col-md-12" style="clear: both; margin-top: 180px;"></div>
 <?php
 $statement = $pdo->prepare("SELECT * FROM tbl_settings WHERE id=1");
 $statement->execute();

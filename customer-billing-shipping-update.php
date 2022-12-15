@@ -1,5 +1,5 @@
 <?php require_once('header.php'); ?>
-
+<div class="col-md-12" style="clear: both; margin-top: 180px;"></div>
 <?php
 // Check if the customer is logged in or not
 if(!isset($_SESSION['customer'])) {
@@ -139,9 +139,9 @@ if (isset($_POST['form1'])) {
                                     <label for=""><?php echo LANG_VALUE_107; ?></label>
                                     <input type="text" class="form-control" name="cust_b_city" value="<?php echo $_SESSION['customer']['cust_b_city']; ?>">
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group d-none">
                                     <label for=""><?php echo LANG_VALUE_108; ?></label>
-                                    <input type="text" class="form-control" name="cust_b_state" value="<?php echo $_SESSION['customer']['cust_b_state']; ?>">
+                                    <input type="text" class="form-control" name="cust_b_state" value="1">
                                 </div>
                                 <div class="form-group">
                                     <label for=""><?php echo LANG_VALUE_109; ?></label>
@@ -185,9 +185,9 @@ if (isset($_POST['form1'])) {
                                     <label for=""><?php echo LANG_VALUE_107; ?></label>
                                     <input type="text" class="form-control" name="cust_s_city" value="<?php echo $_SESSION['customer']['cust_s_city']; ?>">
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group d-none">
                                     <label for=""><?php echo LANG_VALUE_108; ?></label>
-                                    <input type="text" class="form-control" name="cust_s_state" value="<?php echo $_SESSION['customer']['cust_s_state']; ?>">
+                                    <input type="text" class="form-control" name="cust_s_state" value="1">
                                 </div>
                                 <div class="form-group">
                                     <label for=""><?php echo LANG_VALUE_109; ?></label>

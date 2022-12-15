@@ -1,5 +1,5 @@
 <?php require_once('header.php'); ?>
-
+<div class="col-md-12" style="clear: both; margin-top: 180px;"></div>
 <?php
 $statement = $pdo->prepare("SELECT * FROM tbl_settings WHERE id=1");
 $statement->execute();
@@ -16,16 +16,12 @@ if(!isset($_SESSION['cart_p_id'])) {
 }
 ?>
 
-<div class="page-banner" style="background-image: url(assets/uploads/<?php echo $banner_checkout; ?>)">
-    <div class="overlay"></div>
-    <div class="page-banner-inner">
-        <h1><?php echo LANG_VALUE_22; ?></h1>
-    </div>
-</div>
-
 <div class="page">
     <div class="container">
         <div class="row">
+            <div class="col-md-12">
+                <h3>Đặt hàng</h3>
+            </div>
             <div class="col-md-12">
                 
                 <?php if(!isset($_SESSION['customer'])): ?>
@@ -312,7 +308,7 @@ if(!isset($_SESSION['cart_p_id'])) {
 		                <?php if($checkout_access == 0): ?>
 		                	<div class="col-md-12">
 				                <div style="color:red;font-size:22px;margin-bottom:50px;">
-			                        You must have to fill up all the billing and shipping information from your dashboard panel in order to checkout the order. Please fill up the information going to <a href="customer-billing-shipping-update.php" style="color:red;text-decoration:underline;">this link</a>.
+                                Bạn phải điền tất cả thông tin thanh toán và giao hàng qua <a href="customer-billing-shipping-update.php" style="color:red;text-decoration:underline;">đường dẫn này</a>.
 			                    </div>
 	                    	</div>
 	                	<?php else: ?>
@@ -324,43 +320,12 @@ if(!isset($_SESSION['cart_p_id'])) {
 	                                    <label for=""><?php echo LANG_VALUE_34; ?> *</label>
 	                                    <select name="payment_method" class="form-control select2" id="advFieldsStatus">
 	                                        <option value=""><?php echo LANG_VALUE_35; ?></option>
-	                                        <option value="PayPal"><?php echo LANG_VALUE_36; ?></option>
 	                                        <option value="Bank Deposit"><?php echo LANG_VALUE_38; ?></option>
 	                                    </select>
 	                                </div>
 
-                                    <form class="paypal" action="<?php echo BASE_URL; ?>payment/paypal/payment_process.php" method="post" id="paypal_form" target="_blank">
-                                        <input type="hidden" name="cmd" value="_xclick" />
-                                        <input type="hidden" name="no_note" value="1" />
-                                        <input type="hidden" name="lc" value="UK" />
-                                        <input type="hidden" name="currency_code" value="USD" />
-                                        <input type="hidden" name="bn" value="PP-BuyNowBF:btn_buynow_LG.gif:NonHostedGuest" />
-
-                                        <input type="hidden" name="final_total" value="<?php echo $final_total; ?>">
-                                        <div class="col-md-12 form-group">
-                                            <input type="submit" class="btn btn-primary" value="<?php echo LANG_VALUE_46; ?>" name="form1">
-                                        </div>
-                                    </form>
-
-
-
-                                    <form action="payment/bank/init.php" method="post" id="bank_form">
+                                    <form action="payment/cash/init.php" method="post" id="bank_form">
                                         <input type="hidden" name="amount" value="<?php echo $final_total; ?>">
-                                        <div class="col-md-12 form-group">
-                                            <label for=""><?php echo LANG_VALUE_43; ?></span></label><br>
-                                            <?php
-                                            $statement = $pdo->prepare("SELECT * FROM tbl_settings WHERE id=1");
-                                            $statement->execute();
-                                            $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-                                            foreach ($result as $row) {
-                                                echo nl2br($row['bank_detail']);
-                                            }
-                                            ?>
-                                        </div>
-                                        <div class="col-md-12 form-group">
-                                            <label for=""><?php echo LANG_VALUE_44; ?> <br><span style="font-size:12px;font-weight:normal;">(<?php echo LANG_VALUE_45; ?>)</span></label>
-                                            <textarea name="transaction_info" class="form-control" cols="30" rows="10"></textarea>
-                                        </div>
                                         <div class="col-md-12 form-group">
                                             <input type="submit" class="btn btn-primary" value="<?php echo LANG_VALUE_46; ?>" name="form3">
                                         </div>

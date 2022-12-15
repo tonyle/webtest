@@ -1,5 +1,5 @@
 <?php require_once('header.php'); ?>
-
+<div class="col-md-12" style="clear: both; margin-top: 180px;"></div>
 <?php
 // Check if the customer is logged in or not
 if(!isset($_SESSION['customer'])) {
@@ -19,7 +19,10 @@ if(!isset($_SESSION['customer'])) {
 
 <div class="page">
     <div class="container">
-        <div class="row">            
+        <div class="row">  
+            <div class="col-md-12">
+                <h3>Bảng điều khiển</h3>
+            </div>           
             <div class="col-md-12"> 
                 <?php require_once('customer-sidebar.php'); ?>
             </div>

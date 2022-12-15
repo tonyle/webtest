@@ -126,7 +126,7 @@ if(isset($_POST['form_add_to_cart'])) {
 		$current_p_qty = $row['p_qty'];
 	}
 	if($_POST['p_qty'] > $current_p_qty):
-		$temp_msg = 'Sorry! There are only '.$current_p_qty.' item(s) in stock';
+		$temp_msg = 'Không đủ sản phẩm trong kho!';
 		?>
 		<script type="text/javascript">alert('<?php echo $temp_msg; ?>');</script>
 		<?php
@@ -289,68 +289,61 @@ if($success_message1 != '') {
     header('location: product.php?id='.$_REQUEST['id']);
 }
 ?>
+<link rel="stylesheet" type="text/css" href="styles/single_styles.css">
+<link rel="stylesheet" type="text/css" href="styles/single_responsive.css">
 
 
-<div class="page">
-	<div class="container">
+<div class="container single_product_container">
 		<div class="row">
-			<div class="col-md-12">
-                <div class="breadcrumb mb_30">
-                    <ul>
-                        <li><a href="<?php echo BASE_URL; ?>">Home</a></li>
-                        <li>></li>
-                        <li><a href="<?php echo BASE_URL.'product-category.php?id='.$tcat_id.'&type=top-category' ?>"><?php echo $tcat_name; ?></a></li>
-                        <li>></li>
-                        <li><a href="<?php echo BASE_URL.'product-category.php?id='.$mcat_id.'&type=mid-category' ?>"><?php echo $mcat_name; ?></a></li>
-                        <li>></li>
-                        <li><a href="<?php echo BASE_URL.'product-category.php?id='.$ecat_id.'&type=end-category' ?>"><?php echo $ecat_name; ?></a></li>
-                        <li>></li>
-                        <li><?php echo $p_name; ?></li>
-                    </ul>
-                </div>
-
-				<div class="product">
+			<div class="col-lg-7">
+				<div class="single_product_pics">
 					<div class="row">
-						<div class="col-md-5">
-							<ul class="prod-slider">
-                                
-								<li style="background-image: url(assets/uploads/<?php echo $p_featured_photo; ?>);">
-                                    <a class="popup" href="assets/uploads/<?php echo $p_featured_photo; ?>"></a>
-								</li>
+						<div class="col-lg-3 thumbnails_col order-lg-1 order-2">
+							<div class="single_product_thumbnails">
+								<ul>
                                 <?php
+                                $img = '';
                                 $statement = $pdo->prepare("SELECT * FROM tbl_product_photo WHERE p_id=?");
                                 $statement->execute(array($_REQUEST['id']));
                                 $result = $statement->fetchAll(PDO::FETCH_ASSOC);
                                 foreach ($result as $row) {
+                                    $img = "assets/uploads/product_photos/". $row['photo'];
                                     ?>
-                                    <li style="background-image: url(assets/uploads/product_photos/<?php echo $row['photo']; ?>);">
-                                        <a class="popup" href="assets/uploads/product_photos/<?php echo $row['photo']; ?>"></a>
-                                    </li>
+                                    <li><img src="assets/uploads/product_photos/<?php echo $row['photo']; ?>" alt="" data-image="assets/uploads/product_photos/<?php echo $row['photo']; ?>"></li>
                                     <?php
                                 }
                                 ?>
-							</ul>
-							<div id="prod-pager">
-								<a data-slide-index="0" href=""><div class="prod-pager-thumb" style="background-image: url(assets/uploads/<?php echo $p_featured_photo; ?>"></div></a>
-                                <?php
-                                $i=1;
-                                $statement = $pdo->prepare("SELECT * FROM tbl_product_photo WHERE p_id=?");
-                                $statement->execute(array($_REQUEST['id']));
-                                $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-                                foreach ($result as $row) {
-                                    ?>
-                                    <a data-slide-index="<?php echo $i; ?>" href=""><div class="prod-pager-thumb" style="background-image: url(assets/uploads/product_photos/<?php echo $row['photo']; ?>"></div></a>
-                                    <?php
-                                    $i++;
-                                }
-                                ?>
+								</ul>
 							</div>
 						</div>
-						<div class="col-md-7">
-							<div class="p-title"><h2><?php echo $p_name; ?></h2></div>
-							<div class="p-review">
-								<div class="rating">
-                                    <?php
+						<div class="col-lg-9 image_col order-lg-2 order-1">
+							<div class="single_product_image">
+								<div class="single_product_image_background" style="background-image:url(<?php echo $img; ?>)"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-5">
+				<div class="product_details">
+					<div class="product_details_title">
+						<h2><?php echo $p_name; ?></h2>
+						<p><?php echo $p_short_description; ?></p>
+					</div>
+					<div class="free_delivery d-flex flex-row align-items-center justify-content-center">
+						<span class="ti-truck"></span><span>Miễn phí giao hàng</span>
+					</div>
+                    <?php if ($p_old_price != '') { ?>
+					<div class="original_price"><?php echo $p_old_price ?> VND</div>
+                    <?php } ?>
+					<div class="product_price"><?php echo $p_current_price ?> VND</div>
+					<ul class="star_rating">
+						<li><i class="fa fa-star" aria-hidden="true"></i></li>
+						<li><i class="fa fa-star" aria-hidden="true"></i></li>
+						<li><i class="fa fa-star" aria-hidden="true"></i></li>
+						<li><i class="fa fa-star" aria-hidden="true"></i></li>
+						<li><i class="fa fa-star-o" aria-hidden="true"></i></li>
+                        <?php
                                     if($avg_rating == 0) {
                                         echo '';
                                     }
@@ -402,373 +395,94 @@ if($success_message1 != '') {
                                         }
                                     }                                    
                                     ?>
-                                </div>
-							</div>
-							<div class="p-short-des">
-								<p>
-									<?php echo $p_short_description; ?>
-								</p>
-							</div>
-                            <form action="" method="post">
-                            <div class="p-quantity">
-                                <div class="row">
-                                    <?php if(isset($size)): ?>
-                                    <div class="col-md-12 mb_20">
-                                        <?php echo LANG_VALUE_52; ?> <br>
-                                        <select name="size_id" class="form-control select2" style="width:auto;">
-                                            <?php
-                                            $statement = $pdo->prepare("SELECT * FROM tbl_size");
-                                            $statement->execute();
-                                            $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-                                            foreach ($result as $row) {
-                                                if(in_array($row['size_id'],$size)) {
-                                                    ?>
-                                                    <option value="<?php echo $row['size_id']; ?>"><?php echo $row['size_name']; ?></option>
-                                                    <?php
-                                                }
-                                            }
-                                            ?>
-                                        </select>
-                                    </div>
-                                    <?php endif; ?>
+					</ul>
+                    <form action="" method="post">
+					<?php if(isset($size)): ?>
+                    <div class="col-md-12 mb_20">
+                        <?php echo LANG_VALUE_52; ?> <br>
+                        <select name="size_id" class="form-control select2" style="width:auto;">
+                            <?php
+                            $statement = $pdo->prepare("SELECT * FROM tbl_size");
+                            $statement->execute();
+                            $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+                            foreach ($result as $row) {
+                                if(in_array($row['size_id'],$size)) {
+                                    ?>
+                                    <option value="<?php echo $row['size_id']; ?>"><?php echo $row['size_name']; ?></option>
+                                    <?php
+                                }
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <?php endif; ?>
 
-                                    <?php if(isset($color)): ?>
-                                    <div class="col-md-12">
-                                        <?php echo LANG_VALUE_53; ?> <br>
-                                        <select name="color_id" class="form-control select2" style="width:auto;">
-                                            <?php
-                                            $statement = $pdo->prepare("SELECT * FROM tbl_color");
-                                            $statement->execute();
-                                            $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-                                            foreach ($result as $row) {
-                                                if(in_array($row['color_id'],$color)) {
-                                                    ?>
-                                                    <option value="<?php echo $row['color_id']; ?>"><?php echo $row['color_name']; ?></option>
-                                                    <?php
-                                                }
-                                            }
-                                            ?>
-                                        </select>
-                                    </div>
-                                    <?php endif; ?>
-
-                                </div>
-                                
-                            </div>
-							<div class="p-price">
-                                <span style="font-size:14px;"><?php echo LANG_VALUE_54; ?></span><br>
-                                <span>
-                                    <?php if($p_old_price!=''): ?>
-                                        <del><?php echo LANG_VALUE_1; ?><?php echo $p_old_price; ?></del>
-                                    <?php endif; ?> 
-                                        <?php echo LANG_VALUE_1; ?><?php echo $p_current_price; ?>
-                                </span>
-                            </div>
-                            <input type="hidden" name="p_current_price" value="<?php echo $p_current_price; ?>">
-                            <input type="hidden" name="p_name" value="<?php echo $p_name; ?>">
-                            <input type="hidden" name="p_featured_photo" value="<?php echo $p_featured_photo; ?>">
-							<div class="p-quantity">
-                                <?php echo LANG_VALUE_55; ?> <br>
-								<input type="number" class="input-text qty" step="1" min="1" max="" name="p_qty" value="1" title="Qty" size="4" pattern="[0-9]*" inputmode="numeric">
-							</div>
-							<div class="btn-cart btn-cart1">
-                                <input type="submit" value="<?php echo LANG_VALUE_154; ?>" name="form_add_to_cart">
-							</div>
-                            </form>
-							<div class="share">
-                                <?php echo LANG_VALUE_58; ?> <br>
-								<div class="sharethis-inline-share-buttons"></div>
-							</div>
-						</div>
+                    <?php if(isset($color)): ?>
+                    <div class="col-md-12">
+                        <?php echo LANG_VALUE_53; ?> <br>
+                        <select name="color_id" class="form-control select2" style="width:auto;">
+                            <?php
+                            $statement = $pdo->prepare("SELECT * FROM tbl_color");
+                            $statement->execute();
+                            $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+                            foreach ($result as $row) {
+                                if(in_array($row['color_id'],$color)) {
+                                    ?>
+                                    <option value="<?php echo $row['color_id']; ?>"><?php echo $row['color_name']; ?></option>
+                                    <?php
+                                }
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <?php endif; ?>
+					<div class="quantity d-flex flex-column flex-sm-row align-items-sm-center">
+                        <input type="hidden" name="p_current_price" value="<?php echo $p_current_price; ?>">
+                        <input type="hidden" name="p_name" value="<?php echo $p_name; ?>">
+                        <input type="hidden" name="p_featured_photo" value="<?php echo $p_featured_photo; ?>">
+						<span>Số lượng:</span>
+                        <div class="p-quantity">
+                            <input type="number" class="input-text qty" step="1" min="1" max="" name="p_qty" value="1" title="Qty" size="4" pattern="[0-9]*" inputmode="numeric">
+                        </div>
+						<div>
+                        <input  class="red_button add_to_cart_button" type="submit" value="Thêm vào giỏ hàng" name="form_add_to_cart">
+                        </div>
+						<div class="product_favorite d-flex flex-column align-items-center justify-content-center"></div>
 					</div>
+                    </form>
+				</div>
+			</div>
+		</div>
 
-					<div class="row">
-						<div class="col-md-12">
-							<!-- Nav tabs -->
-							<ul class="nav nav-tabs" role="tablist">
-								<li role="presentation" class="active"><a href="#description" aria-controls="description" role="tab" data-toggle="tab"><?php echo LANG_VALUE_59; ?></a></li>
-								<li role="presentation"><a href="#feature" aria-controls="feature" role="tab" data-toggle="tab"><?php echo LANG_VALUE_60; ?></a></li>
-                                <li role="presentation"><a href="#condition" aria-controls="condition" role="tab" data-toggle="tab"><?php echo LANG_VALUE_61; ?></a></li>
-                                <li role="presentation"><a href="#return_policy" aria-controls="return_policy" role="tab" data-toggle="tab"><?php echo LANG_VALUE_62; ?></a></li>
-                               <!-- <li role="presentation"><a href="#review" aria-controls="review" role="tab" data-toggle="tab"><?php echo LANG_VALUE_63; ?></a></li> -->
-							</ul>
+	</div>
 
-							<!-- Tab panes -->
-							<div class="tab-content">
-								<div role="tabpanel" class="tab-pane active" id="description" style="margin-top: -30px;">
-									<p>
-                                        <?php
-                                        if($p_description == '') {
-                                            echo LANG_VALUE_70;
-                                        } else {
-                                            echo $p_description;
-                                        }
-                                        ?>
-									</p>
-								</div>
-                                <div role="tabpanel" class="tab-pane" id="feature" style="margin-top: -30px;">
-                                    <p>
-                                        <?php
-                                        if($p_feature == '') {
-                                            echo LANG_VALUE_71;
-                                        } else {
-                                            echo $p_feature;
-                                        }
-                                        ?>
-                                    </p>
-                                </div>
-                                <div role="tabpanel" class="tab-pane" id="condition" style="margin-top: -30px;">
-                                    <p>
-                                        <?php
-                                        if($p_condition == '') {
-                                            echo LANG_VALUE_72;
-                                        } else {
-                                            echo $p_condition;
-                                        }
-                                        ?>
-                                    </p>
-                                </div>
-                                <div role="tabpanel" class="tab-pane" id="return_policy" style="margin-top: -30px;">
-                                    <p>
-                                        <?php
-                                        if($p_return_policy == '') {
-                                            echo LANG_VALUE_73;
-                                        } else {
-                                            echo $p_return_policy;
-                                        }
-                                        ?>
-                                    </p>
-                                </div>
-								<div role="tabpanel" class="tab-pane" id="review" style="margin-top: -30px;">
+    <div class="tabs_section_container">
 
-                                    <div class="review-form">
-                                        <?php
-                                        $statement = $pdo->prepare("SELECT * 
-                                                            FROM tbl_rating t1 
-                                                            JOIN tbl_customer t2 
-                                                            ON t1.cust_id = t2.cust_id 
-                                                            WHERE t1.p_id=?");
-                                        $statement->execute(array($_REQUEST['id']));
-                                        $total = $statement->rowCount();
-                                        ?>
-                                        <h2><?php echo LANG_VALUE_63; ?> (<?php echo $total; ?>)</h2>
-                                        <?php
-                                        if($total) {
-                                            $j=0;
-                                            $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-                                            foreach ($result as $row) {
-                                                $j++;
-                                                ?>
-                                                <div class="mb_10"><b><u><?php echo LANG_VALUE_64; ?> <?php echo $j; ?></u></b></div>
-                                                <table class="table table-bordered">
-                                                    <tr>
-                                                        <th style="width:170px;"><?php echo LANG_VALUE_75; ?></th>
-                                                        <td><?php echo $row['cust_name']; ?></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th><?php echo LANG_VALUE_76; ?></th>
-                                                        <td><?php echo $row['comment']; ?></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th><?php echo LANG_VALUE_78; ?></th>
-                                                        <td>
-                                                            <div class="rating">
-                                                                <?php
-                                                                for($i=1;$i<=5;$i++) {
-                                                                    ?>
-                                                                    <?php if($i>$row['rating']): ?>
-                                                                        <i class="fa fa-star-o"></i>
-                                                                    <?php else: ?>
-                                                                        <i class="fa fa-star"></i>
-                                                                    <?php endif; ?>
-                                                                    <?php
-                                                                }
-                                                                ?>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                                <?php
-                                            }
-                                        } else {
-                                            echo LANG_VALUE_74;
-                                        }
-                                        ?>
-                                        
-                                        <h2><?php echo LANG_VALUE_65; ?></h2>
-                                        <?php
-                                        if($error_message != '') {
-                                            echo "<script>alert('".$error_message."')</script>";
-                                        }
-                                        if($success_message != '') {
-                                            echo "<script>alert('".$success_message."')</script>";
-                                        }
-                                        ?>
-                                        <?php if(isset($_SESSION['customer'])): ?>
-
-                                            <?php
-                                            $statement = $pdo->prepare("SELECT * 
-                                                                FROM tbl_rating
-                                                                WHERE p_id=? AND cust_id=?");
-                                            $statement->execute(array($_REQUEST['id'],$_SESSION['customer']['cust_id']));
-                                            $total = $statement->rowCount();
-                                            ?>
-                                            <?php if($total==0): ?>
-                                            <form action="" method="post">
-                                            <div class="rating-section">
-                                                <input type="radio" name="rating" class="rating" value="1" checked>
-                                                <input type="radio" name="rating" class="rating" value="2" checked>
-                                                <input type="radio" name="rating" class="rating" value="3" checked>
-                                                <input type="radio" name="rating" class="rating" value="4" checked>
-                                                <input type="radio" name="rating" class="rating" value="5" checked>
-                                            </div>                                            
-                                            <div class="form-group">
-                                                <textarea name="comment" class="form-control" cols="30" rows="10" placeholder="Write your comment (optional)" style="height:100px;"></textarea>
-                                            </div>
-                                            <input type="submit" class="btn btn-default" name="form_review" value="<?php echo LANG_VALUE_67; ?>">
-                                            </form>
-                                            <?php else: ?>
-                                                <span style="color:red;"><?php echo LANG_VALUE_68; ?></span>
-                                            <?php endif; ?>
-
-
-                                        <?php else: ?>
-                                            <p class="error">
-												<?php echo LANG_VALUE_69; ?> <br>
-												<a href="login.php" style="color:red;text-decoration: underline;"><?php echo LANG_VALUE_9; ?></a>
-											</p>
-                                        <?php endif; ?>                         
-                                    </div>
-
-								</div>
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<div class="tabs_container">
+						<ul class="tabs d-flex flex-sm-row flex-column align-items-left align-items-md-center justify-content-center">
+							<li class="tab active" data-active-tab="tab_1"><span>Mô tả sản phẩm</span></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<div id="tab_1" class="tab_container active">
+						<div class="row">
+							<div class="col-lg-5 desc_col">
+								<?php echo $p_description; ?>
 							</div>
 						</div>
 					</div>
 
 				</div>
-
 			</div>
 		</div>
+
 	</div>
-</div>
-
-<div class="product bg-gray pt_70 pb_70">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="headline">
-                    <h2><?php echo LANG_VALUE_155; ?></h2>
-                    <h3><?php echo LANG_VALUE_156; ?></h3>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-
-                <div class="product-carousel">
-
-                    <?php
-                    $statement = $pdo->prepare("SELECT * FROM tbl_product WHERE ecat_id=? AND p_id!=?");
-                    $statement->execute(array($ecat_id,$_REQUEST['id']));
-                    $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-                    foreach ($result as $row) {
-                        ?>
-                        <div class="item">
-                            <div class="thumb">
-                                <div class="photo" style="background-image:url(assets/uploads/<?php echo $row['p_featured_photo']; ?>);"></div>
-                                <div class="overlay"></div>
-                            </div>
-                            <div class="text">
-                                <h3><a href="product.php?id=<?php echo $row['p_id']; ?>"><?php echo $row['p_name']; ?></a></h3>
-                                <h4>
-                                    <?php echo LANG_VALUE_1; ?><?php echo $row['p_current_price']; ?> 
-                                    <?php if($row['p_old_price'] != ''): ?>
-                                    <del>
-                                        <?php echo LANG_VALUE_1; ?><?php echo $row['p_old_price']; ?>
-                                    </del>
-                                    <?php endif; ?>
-                                </h4>
-                                <div class="rating">
-                                    <?php
-                                    $t_rating = 0;
-                                    $statement1 = $pdo->prepare("SELECT * FROM tbl_rating WHERE p_id=?");
-                                    $statement1->execute(array($row['p_id']));
-                                    $tot_rating = $statement1->rowCount();
-                                    if($tot_rating == 0) {
-                                        $avg_rating = 0;
-                                    } else {
-                                        $result1 = $statement1->fetchAll(PDO::FETCH_ASSOC);
-                                        foreach ($result1 as $row1) {
-                                            $t_rating = $t_rating + $row1['rating'];
-                                        }
-                                        $avg_rating = $t_rating / $tot_rating;
-                                    }
-                                    ?>
-                                    <?php
-                                    if($avg_rating == 0) {
-                                        echo '';
-                                    }
-                                    elseif($avg_rating == 1.5) {
-                                        echo '
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star-half-o"></i>
-                                            <i class="fa fa-star-o"></i>
-                                            <i class="fa fa-star-o"></i>
-                                            <i class="fa fa-star-o"></i>
-                                        ';
-                                    } 
-                                    elseif($avg_rating == 2.5) {
-                                        echo '
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star-half-o"></i>
-                                            <i class="fa fa-star-o"></i>
-                                            <i class="fa fa-star-o"></i>
-                                        ';
-                                    }
-                                    elseif($avg_rating == 3.5) {
-                                        echo '
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star-half-o"></i>
-                                            <i class="fa fa-star-o"></i>
-                                        ';
-                                    }
-                                    elseif($avg_rating == 4.5) {
-                                        echo '
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star-half-o"></i>
-                                        ';
-                                    }
-                                    else {
-                                        for($i=1;$i<=5;$i++) {
-                                            ?>
-                                            <?php if($i>$avg_rating): ?>
-                                                <i class="fa fa-star-o"></i>
-                                            <?php else: ?>
-                                                <i class="fa fa-star"></i>
-                                            <?php endif; ?>
-                                            <?php
-                                        }
-                                    }
-                                    ?>
-                                </div>
-                                <p><a href="product.php?id=<?php echo $row['p_id']; ?>"><?php echo LANG_VALUE_154; ?></a></p>
-                            </div>
-                        </div>
-                        <?php
-                    }
-                    ?>
-
-                </div>
-
-            </div>
-        </div>
-    </div>
-</div>
 
 <?php require_once('footer.php'); ?>
+<script src="js/single_custom.js"></script>

@@ -1,5 +1,5 @@
 <?php require_once('header.php'); ?>
-
+<div class="col-md-12" style="clear: both; margin-top: 180px;"></div>
 <div class="page">
     <div class="container">
         <div class="row">            

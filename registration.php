@@ -1,5 +1,5 @@
 <?php require_once('header.php'); ?>
-
+<div class="col-md-12" style="clear: both; margin-top: 180px;"></div>
 <?php
 $statement = $pdo->prepare("SELECT * FROM tbl_settings WHERE id=1");
 $statement->execute();
@@ -55,11 +55,6 @@ if (isset($_POST['form1'])) {
     if(empty($_POST['cust_city'])) {
         $valid = 0;
         $error_message .= LANG_VALUE_127."<br>";
-    }
-
-    if(empty($_POST['cust_state'])) {
-        $valid = 0;
-        $error_message .= LANG_VALUE_128."<br>";
     }
 
     if(empty($_POST['cust_zip'])) {
@@ -131,6 +126,7 @@ if (isset($_POST['form1'])) {
                                         '',
                                         '',
                                         '',
+                                        strip_tags($_POST['cust_country']),
                                         '',
                                         '',
                                         '',
@@ -138,8 +134,7 @@ if (isset($_POST['form1'])) {
                                         '',
                                         '',
                                         '',
-                                        '',
-                                        '',
+                                        strip_tags($_POST['cust_country']),
                                         '',
                                         '',
                                         '',
@@ -148,51 +143,20 @@ if (isset($_POST['form1'])) {
                                         $token,
                                         $cust_datetime,
                                         $cust_timestamp,
-                                        0
+                                        1
                                     ));
-
-        // Send email for confirmation of the account
-        $to = $_POST['cust_email'];
-        
-        $subject = LANG_VALUE_150;
-        $verify_link = BASE_URL.'verify.php?email='.$to.'&token='.$token;
-        $message = '
-'.LANG_VALUE_151.'<br><br>
-
-<a href="'.$verify_link.'">'.$verify_link.'</a>';
-
-        $headers = "From: noreply@" . BASE_URL . "\r\n" .
-                   "Reply-To: noreply@" . BASE_URL . "\r\n" .
-                   "X-Mailer: PHP/" . phpversion() . "\r\n" . 
-                   "MIME-Version: 1.0\r\n" . 
-                   "Content-Type: text/html; charset=ISO-8859-1\r\n";
-        
-        // Sending Email
-        mail($to, $subject, $message, $headers);
-
-        unset($_POST['cust_name']);
-        unset($_POST['cust_cname']);
-        unset($_POST['cust_email']);
-        unset($_POST['cust_phone']);
-        unset($_POST['cust_address']);
-        unset($_POST['cust_city']);
-        unset($_POST['cust_state']);
-        unset($_POST['cust_zip']);
 
         $success_message = LANG_VALUE_152;
     }
 }
 ?>
 
-<div class="page-banner" style="background-color:#444;background-image: url(assets/uploads/<?php echo $banner_registration; ?>);">
-    <div class="inner">
-        <h1><?php echo LANG_VALUE_16; ?></h1>
-    </div>
-</div>
-
 <div class="page">
     <div class="container">
         <div class="row">
+            <div class="col-md-12">
+                <h3>Đăng ký</h3>
+            </div>   
             <div class="col-md-12">
                 <div class="user-content">
 
@@ -254,9 +218,9 @@ if (isset($_POST['form1'])) {
                                     <label for=""><?php echo LANG_VALUE_107; ?> *</label>
                                     <input type="text" class="form-control" name="cust_city" value="<?php if(isset($_POST['cust_city'])){echo $_POST['cust_city'];} ?>">
                                 </div>
-                                <div class="col-md-6 form-group">
+                                <div class="col-md-6 form-group d-none">
                                     <label for=""><?php echo LANG_VALUE_108; ?> *</label>
-                                    <input type="text" class="form-control" name="cust_state" value="<?php if(isset($_POST['cust_state'])){echo $_POST['cust_state'];} ?>">
+                                    <input type="text" class="form-control" name="cust_state" value="1">
                                 </div>
                                 <div class="col-md-6 form-group">
                                     <label for=""><?php echo LANG_VALUE_109; ?> *</label>

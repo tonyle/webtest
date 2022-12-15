@@ -1,5 +1,5 @@
 <?php require_once('header.php'); ?>
-//fetching row banner login
+<div class="col-md-12" style="clear: both; margin-top: 180px;"></div>
 <?php
 $statement = $pdo->prepare("SELECT * FROM tbl_settings WHERE id=1");
 $statement->execute();
@@ -8,7 +8,6 @@ foreach ($result as $row) {
     $banner_login = $row['banner_login'];
 }
 ?>
-//login form
 <?php
 if(isset($_POST['form1'])) {
         
@@ -48,15 +47,12 @@ if(isset($_POST['form1'])) {
 }
 ?>
 
-<div class="page-banner" style="background-color:#444;background-image: url(assets/uploads/<?php echo $banner_login; ?>);">
-    <div class="inner">
-        <h1><?php echo LANG_VALUE_10; ?></h1>
-    </div>
-</div>
-
 <div class="page">
     <div class="container">
         <div class="row">
+            <div class="col-md-12">
+                <h3><?php echo LANG_VALUE_10; ?></h3>
+            </div>   
             <div class="col-md-12">
                 <div class="user-content">
 
@@ -86,7 +82,6 @@ if(isset($_POST['form1'])) {
                                     <label for=""></label>
                                     <input type="submit" class="btn btn-primary" value="<?php echo LANG_VALUE_4; ?>" name="form1">
                                 </div>
-                                <a href="forget-password.php" style="color:#e4144d;"><?php echo LANG_VALUE_97; ?></a>
                             </div>
                         </div>                        
                     </form>

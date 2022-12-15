@@ -3,7 +3,6 @@ ob_start();
 session_start();
 include("../../admin/inc/config.php");
 include("../../admin/inc/functions.php");
-// Getting all language variables into array as global variable
 $i=1;
 $statement = $pdo->prepare("SELECT * FROM tbl_language");
 $statement->execute();
@@ -15,9 +14,6 @@ foreach ($result as $row) {
 ?>
 <?php
 if( !isset($_REQUEST['msg']) ) {
-	if(empty($_POST['transaction_info'])) {
-		header('location: ../../checkout.php');
-	} else {
 		$payment_date = date('Y-m-d H:i:s');
 	    $payment_id = time();
 
@@ -49,10 +45,10 @@ if( !isset($_REQUEST['msg']) ) {
 	                            '',
 	                            '', 
 	                            '',
-	                            $_POST['transaction_info'],
-	                            'Bank Deposit',
-	                            'Pending',
-	                            'Pending',
+	                            '',
+	                            'Tiền mặt',
+	                            'Chờ thanh toán',
+	                            'Chờ giao hàng',
 	                            $payment_id
 	                        ));
 
@@ -154,6 +150,6 @@ if( !isset($_REQUEST['msg']) ) {
 	    unset($_SESSION['cart_p_featured_photo']);
 
 	    header('location: ../../payment_success.php');
-	}
+	
 }
 ?>

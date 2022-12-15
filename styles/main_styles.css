@@ -999,6 +999,10 @@ section
 	background: #fe4c50;
 }
 
+
+.cart img {
+	max-width: 100px !important;
+}
 /*********************************
 5.2 New Arrivals Products Grid
 *********************************/
@@ -1151,17 +1155,7 @@ section
 {
 	right: 15px;
 }
-.add_to_cart_button
-{
-	width: 100%;
-	visibility: hidden;
-	opacity: 0;
-	-webkit-transition: all 0.3s ease;
-	-moz-transition: all 0.3s ease;
-	-ms-transition: all 0.3s ease;
-	-o-transition: all 0.3s ease;
-	transition: all 0.3s ease;
-}
+
 .add_to_cart_button a
 {
 	font-size: 12px;

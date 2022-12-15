@@ -52,8 +52,17 @@ foreach ($result as $row)
         $i++;
     }
 ?>
-
-
+<style>.add_to_cart_button
+{
+	width: 100%;
+	visibility: hidden;
+	opacity: 0;
+	-webkit-transition: all 0.3s ease;
+	-moz-transition: all 0.3s ease;
+	-ms-transition: all 0.3s ease;
+	-o-transition: all 0.3s ease;
+	transition: all 0.3s ease;
+}</style>
 <div class="banner">
     <div class="container">
         <div class="row">
@@ -241,3 +250,4 @@ foreach ($result as $row)
 	</div>
 
 <?php require_once('footer.php'); ?>
+<script src="js/custom.js"></script>
